@@ -9,15 +9,10 @@ services:
     networks:
       - meetjitsi
       - traefik-public
-    ports:
-      - '${HTTP_PORT}:80'
-      - '${HTTPS_PORT}:443'
     volumes:
       - ${CONFIG}/web:/config:Z
       - ${CONFIG}/transcripts:/usr/share/jitsi-meet/transcripts:Z
     deploy:
-#      mode: replicated
-#      replicas: 3
       replicas: 1
       restart_policy:
         condition: any
@@ -58,7 +53,7 @@ services:
       - LETSENCRYPT_DOMAIN
       - LETSENCRYPT_EMAIL
       - LETSENCRYPT_USE_STAGING
-      - PUBLIC_URL
+      - PUBLIC_URL=https://${JITSI_HOSTNAME}
       - TZ
       - AMPLITUDE_ID
       - ANALYTICS_SCRIPT_URLS
@@ -158,8 +153,6 @@ services:
       - ${CONFIG}/prosody/config:/config:Z
       - ${CONFIG}/prosody/prosody-plugins-custom:/prosody-plugins-custom:Z
     deploy:
-#      mode: replicated
-#      replicas: 3
       replicas: 1
       restart_policy:
         condition: any
@@ -224,7 +217,7 @@ services:
       - JWT_AUTH_TYPE
       - JWT_TOKEN_AUTH_MODULE
       - LOG_LEVEL
-      - PUBLIC_URL
+      - PUBLIC_URL=https://${JITSI_HOSTNAME}
       - TZ
 
 
@@ -237,8 +230,6 @@ services:
     volumes:
       - ${CONFIG}/jicofo:/config:Z
     deploy:
-#      mode: replicated
-#      replicas: 3
       replicas: 1
       restart_policy:
         condition: any
@@ -302,8 +293,6 @@ services:
     volumes:
       - ${CONFIG}/jvb:/config:Z
     deploy:
-#      mode: replicated
-#      replicas: 3
       replicas: 1
       restart_policy:
         condition: any
@@ -335,7 +324,7 @@ services:
       - JVB_ENABLE_APIS
       - JVB_WS_DOMAIN
       - JVB_WS_SERVER_ID
-      - PUBLIC_URL
+      - PUBLIC_URL=https://${JITSI_HOSTNAME}
       - JVB_OCTO_BIND_ADDRESS
       - JVB_OCTO_PUBLIC_ADDRESS
       - JVB_OCTO_BIND_PORT
