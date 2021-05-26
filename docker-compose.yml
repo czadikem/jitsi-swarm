@@ -13,7 +13,7 @@ services:
       - ${CONFIG}/web:/config:Z
       - ${CONFIG}/transcripts:/usr/share/jitsi-meet/transcripts:Z
     deploy:
-      replicas: 1
+      replicas: 6
       restart_policy:
         condition: any
       update_config:
@@ -153,7 +153,7 @@ services:
       - ${CONFIG}/prosody/config:/config:Z
       - ${CONFIG}/prosody/prosody-plugins-custom:/prosody-plugins-custom:Z
     deploy:
-      replicas: 1
+      replicas: 6
       restart_policy:
         condition: any
       update_config:
@@ -230,7 +230,7 @@ services:
     volumes:
       - ${CONFIG}/jicofo:/config:Z
     deploy:
-      replicas: 1
+      replicas: 6
       restart_policy:
         condition: any
       update_config:
@@ -293,7 +293,7 @@ services:
     volumes:
       - ${CONFIG}/jvb:/config:Z
     deploy:
-      replicas: 1
+      replicas: 6
       restart_policy:
         condition: any
       update_config:
