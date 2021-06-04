@@ -146,26 +146,16 @@ services:
          aliases:
            - ${XMPP_SERVER}
     ports:
-      - '5222'
-      - '5347'
-      - '5280'
+      - 5222:5222
+      - 5347:5347
+      - 5280:5280
     volumes:
       - ${CONFIG}/prosody/config:/config:Z
       - ${CONFIG}/prosody/prosody-plugins-custom:/prosody-plugins-custom:Z
     deploy:
-      replicas: 6
+      replicas: 1
       restart_policy:
-        condition: any
-      update_config:
-        parallelism: 2
-        delay: 10s
-        order: stop-first
-        monitor: 10s
-      rollback_config:
-        parallelism: 2
-        delay: 10s
-        order: stop-first
-        monitor: 10s
+        condition: on-failure
     environment:
       - AUTH_TYPE
       - ENABLE_AUTH
@@ -230,19 +220,9 @@ services:
     volumes:
       - ${CONFIG}/jicofo:/config:Z
     deploy:
-      replicas: 6
+      replicas: 1
       restart_policy:
-        condition: any
-      update_config:
-        parallelism: 2
-        delay: 10s
-        order: stop-first
-        monitor: 10s
-      rollback_config:
-        parallelism: 2
-        delay: 10s
-        order: stop-first
-        monitor: 10s
+        condition: on-failure
     environment:
       - AUTH_TYPE
       - BRIDGE_AVG_PARTICIPANT_STRESS
@@ -286,26 +266,16 @@ services:
     networks:
       meetjitsi:
          aliases:
-           - jvb.meetjitsi
+           - jvbmeetjitsi
     ports:
       - '${JVB_PORT}:${JVB_PORT}/udp'
       - '${JVB_TCP_PORT}:${JVB_TCP_PORT}'
     volumes:
       - ${CONFIG}/jvb:/config:Z
     deploy:
-      replicas: 6
+      replicas: 1
       restart_policy:
-        condition: any
-      update_config:
-        parallelism: 2
-        delay: 10s
-        order: stop-first
-        monitor: 10s
-      rollback_config:
-        parallelism: 2
-        delay: 10s
-        order: stop-first
-        monitor: 10s
+        condition: on-failure
     environment:
       - ENABLE_COLIBRI_WEBSOCKET
       - ENABLE_OCTO
@@ -334,7 +304,7 @@ services:
 # Custom network so all services can communicate using a FQDN
 networks:
   meetjitsi:
-     driver: overlay
-     attachable: true
+#     driver: overlay
+#     attachable: true
   traefik-public:
     external: true
